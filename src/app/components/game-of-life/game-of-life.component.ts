@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { GameOfLifeService } from '../../services/game-of-life.service';
 import { Universe } from '../../models/Universe';
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-game-of-life',
@@ -13,17 +13,16 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('universeContainer', { static: false }) universeContainer: ElementRef;
 
   public universe: Universe;
-
   private subscriptions: Subscription[] = [];
+
+  public observableCells: BehaviorSubject<number>[][] = [];
 
   constructor(private gameOfLife: GameOfLifeService) {
   }
 
   ngOnInit() {
     this.subscriptions.push(
-      this.gameOfLife.getUniverse().subscribe((universe) => {
-        this.universe = universe;
-      })
+      this.gameOfLife.getUniverse().subscribe(this.onNewUniverse)
     );
 
     this.subscriptions.push(
@@ -43,14 +42,34 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  public onClickCell(heightPosition: number, widthPosition: number, value: number) {
-    this.gameOfLife.setCellValue({ widthPosition, heightPosition }, value !== 0 ? 0 : 1);
-  }
 
   public setUniverseSize() {
     const nbInHeight = Math.floor(this.universeContainer.nativeElement.offsetHeight / 22);
     const nbInWidth = Math.floor(this.universeContainer.nativeElement.offsetWidth / 22);
     this.gameOfLife.setUniversSize(nbInWidth, nbInHeight);
+  }
+
+
+  private onNewUniverse = (universe: Universe): void => {
+    if (this.universe === undefined || this.universe.height !== universe.height || this.universe.width !== universe.width) {
+      this.observableCells = universe.map.map((rowOfCell) => {
+        return rowOfCell.map((cell) => {
+          return new BehaviorSubject(cell);
+        });
+      });
+    } else {
+      universe.map.forEach((rowOfCell, verticalPosition) => {
+        rowOfCell.forEach((cell, horisontalPosition) => {
+          const observableCell = this.observableCells[verticalPosition][horisontalPosition];
+          if (observableCell.value !== cell) {
+            observableCell.next(cell);
+          }
+        });
+      });
+    }
+
+    this.universe = universe;
+
   }
 
 }

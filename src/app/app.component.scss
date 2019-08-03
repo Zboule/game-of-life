@@ -9,8 +9,9 @@
 }
 
 .menu-container {
-    background-color:gray;
     min-width: 400px;
+    border-right: solid 1px lightgray;
+    box-sizing: border-box;
 }
 
 .game-container {

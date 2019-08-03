@@ -1,4 +1,9 @@
-<div>Age: {{universe.age}}</div>
-<button (click)="start()">Start</button>
-<button (click)="stop()">Stop</button>
-<button (click)="reset()">Reset</button>
+
+<div class="button-container">
+    <button *ngIf="universeState === 'stoped'" mat-stroked-button color="primary" (click)="start()">START</button>
+    <button *ngIf="universeState === 'started'" mat-stroked-button color="primary" (click)="stop()">STOP</button>
+    <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
+</div>
+
+
+<span [matBadge]="universe.age" matBadgeOverlap="false">AGE</span>

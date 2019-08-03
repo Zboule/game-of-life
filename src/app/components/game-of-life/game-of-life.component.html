@@ -1,8 +1,9 @@
-<div #universeContainer class="universe-container" *ngIf="universe !== undefined">
-    <div *ngFor="let row of universe.map;let heightPosition = index" class="row-of-cells">
-        <div *ngFor="let cell of row;let widthPosition = index" [class]="'cell ' + (cell>0 ? 'alive' : 'dead')"
-            (click)="onClickCell(heightPosition,widthPosition,cell)">
-            {{cell}}
-        </div>
+<div #universeContainer class="universe-container">
+    <div *ngFor="let row of observableCells;let verticalPosition = index" class="row-of-cells">
+
+        <app-cell *ngFor="let cell of row;let horisontalPosition = index" [observableValue]="cell"
+            [horisontalPosition]="horisontalPosition" [verticalPosition]="verticalPosition">
+        </app-cell>
+
     </div>
 </div>

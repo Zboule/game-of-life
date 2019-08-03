@@ -13,13 +13,20 @@ export class MenuComponent implements OnInit, OnDestroy {
   public universe: Universe;
 
   private subscriptions: Subscription[] = [];
+  public universeState;
 
-  constructor(private gameOfLife: GameOfLifeService) { }
+  constructor(public gameOfLife: GameOfLifeService) { }
 
   ngOnInit() {
     this.subscriptions.push(
       this.gameOfLife.getUniverse().subscribe((universe) => {
         this.universe = universe;
+      })
+    );
+
+    this.subscriptions.push(
+      this.gameOfLife.universeState.subscribe((universeState) => {
+        this.universeState = universeState;
       })
     );
   }

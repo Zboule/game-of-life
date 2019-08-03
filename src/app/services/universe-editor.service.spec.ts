@@ -43,9 +43,9 @@ describe('UniverseEditorService', () => {
   });
 
 
-  fit('should be efficient', () => {
+  it('should be efficient', () => {
     const univeseGenerator: UniverseGeneratorService = TestBed.get(UniverseGeneratorService);
-    let universe = univeseGenerator.getEmptyUniverse(1000, 1000);
+    let universe = univeseGenerator.getEmptyUniverse(50, 50 );
 
     const univeseEditor: UniverseEditorService = TestBed.get(UniverseEditorService);
 

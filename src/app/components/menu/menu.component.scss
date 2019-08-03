@@ -1,0 +1,22 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 300px;
+        width: 100%;
+        padding: 10%;
+        box-sizing: border-box;
+        align-items: center;
+
+        button {
+            width: 50%;
+        }
+    }
+}

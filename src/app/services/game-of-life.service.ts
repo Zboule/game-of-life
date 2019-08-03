@@ -13,11 +13,13 @@ export class GameOfLifeService {
   private generationTime = 500;
   private intervalHandler: any;
   private universe: BehaviorSubject<Universe>;
+  public universeState: BehaviorSubject<'started' | 'stoped'>;
 
   constructor(
     private universeGenerator: UniverseGeneratorService,
     private universeEditor: UniverseEditorService
   ) {
+    this.universeState = new BehaviorSubject('stoped');
     this.universe = new BehaviorSubject(this.universeGenerator.getEmptyUniverse(10, 10));
   }
 
@@ -36,6 +38,7 @@ export class GameOfLifeService {
 
   public start() {
     clearInterval(this.intervalHandler);
+    this.universeState.next('started');
     this.intervalHandler = setInterval(() => {
       this.universe.next(this.universeEditor.tickUniverse(this.universe.value));
     }, this.generationTime);
@@ -43,11 +46,12 @@ export class GameOfLifeService {
 
   public stop() {
     clearInterval(this.intervalHandler);
+    this.universeState.next('stoped');
   }
 
   public reset() {
     this.stop();
-    this.universe.next(this.universeGenerator.getEmptyUniverse(10, 10));
+    this.universe.next(this.universeGenerator.getEmptyUniverse(this.universe.value.width, this.universe.value.height));
   }
 
 

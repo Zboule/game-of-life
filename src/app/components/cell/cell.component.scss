@@ -1,0 +1,44 @@
+.cell {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    min-height: 20px;
+}
+
+.dead {
+
+    // background-color: gray;
+}
+.alive
+{
+    background-color: rgb(1, 145, 25);
+    &.age1{
+        background-color: rgba(18, 109, 33, 0.1);
+    }
+    &.age2{
+        background-color: rgba(18, 109, 33, 0.2);
+    }
+    &.age3{
+        background-color: rgba(18, 109, 33, 0.3);
+    }
+    &.age4{
+        background-color: rgba(18, 109, 33, 0.4);
+    }
+    &.age5{
+        background-color: rgba(18, 109, 33, 0.5);
+    }
+    &.age6{
+        background-color: rgba(18, 109, 33, 0.6);
+    }
+    &.age7{
+        background-color: rgba(18, 109, 33, 0.7);
+    }
+    &.age8{
+        background-color: rgba(18, 109, 33, 0.8);
+    }
+    &.age9{
+        background-color: rgba(18, 109, 33, 0.9);
+    }
+
+
+}
