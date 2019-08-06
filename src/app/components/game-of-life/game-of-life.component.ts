@@ -15,6 +15,8 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
   public universe: Universe;
   private subscriptions: Subscription[] = [];
 
+  private cellColor: [10, 20, 30];
+
   public observableCells: BehaviorSubject<number>[][] = [];
 
   constructor(private gameOfLife: GameOfLifeService) {
@@ -44,25 +46,25 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public setUniverseSize() {
-    const nbInHeight = Math.floor(this.universeContainer.nativeElement.offsetHeight / 22);
-    const nbInWidth = Math.floor(this.universeContainer.nativeElement.offsetWidth / 22);
+    const nbInHeight = Math.floor(this.universeContainer.nativeElement.offsetHeight / 20);
+    const nbInWidth = Math.floor(this.universeContainer.nativeElement.offsetWidth / 20);
     this.gameOfLife.setUniversSize(nbInWidth, nbInHeight);
   }
 
 
   private onNewUniverse = (universe: Universe): void => {
     if (this.universe === undefined || this.universe.height !== universe.height || this.universe.width !== universe.width) {
-      this.observableCells = universe.map.map((rowOfCell) => {
+      this.observableCells = universe.cells.map((rowOfCell) => {
         return rowOfCell.map((cell) => {
-          return new BehaviorSubject(cell);
+          return new BehaviorSubject(cell.age);
         });
       });
     } else {
-      universe.map.forEach((rowOfCell, verticalPosition) => {
+      universe.cells.forEach((rowOfCell, verticalPosition) => {
         rowOfCell.forEach((cell, horisontalPosition) => {
           const observableCell = this.observableCells[verticalPosition][horisontalPosition];
-          if (observableCell.value !== cell) {
-            observableCell.next(cell);
+          if (observableCell.value !== cell.age) {
+            observableCell.next(cell.age);
           }
         });
       });

@@ -1,3 +1,3 @@
-<div [class]="'cell ' + (cellValue>0 ? 'alive' : 'dead') + ' age' + cellValue" (click)="onClickCell()">
-
+<div class="cellContainer"  (click)="onClickCell()" >
+    <div [class]="'cell ' + (cellValue ? (cellValue>0 ? 'alive' : 'dead') : '') + ' age' + cellValue" [style.opacity]="cellValue / 10 + 0.2"></div>
 </div>

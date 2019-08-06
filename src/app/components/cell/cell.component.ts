@@ -10,35 +10,46 @@ import { BehaviorSubject } from 'rxjs';
 export class CellComponent implements OnInit, OnDestroy {
 
   @Input()
-  observableValue: BehaviorSubject<number>;
+  public observableValue: BehaviorSubject<number>;
 
   @Input()
-  horisontalPosition: number;
+  public horisontalPosition: number;
 
   @Input()
-  verticalPosition: number;
+  public verticalPosition: number;
 
-  cellValue = 0;
+  @Input()
+  public cellValue: number;
 
   constructor(private gameOfLife: GameOfLifeService) {
   }
 
 
   ngOnInit() {
-    this.observableValue.subscribe((value) => {
-      this.cellValue = value;
-    });
+    if (this.observableValue) {
+      this.observableValue.subscribe((value) => {
+        if (value > 0 || this.cellValue !== undefined) {
+          this.cellValue = value;
+        }
+      });
+    }
+
   }
 
   ngOnDestroy() {
-    this.observableValue.unsubscribe();
+    if (this.observableValue) {
+      this.observableValue.unsubscribe();
+    }
   }
 
   public onClickCell() {
-    this.gameOfLife.setCellValue(
-      { widthPosition: this.horisontalPosition, heightPosition: this.verticalPosition },
-      this.cellValue !== 0 ? 0 : 1
-    );
+    if (this.observableValue) {
+      this.gameOfLife.stop();
+      this.gameOfLife.setCellValue(
+        { horizontalPosition: this.horisontalPosition, verticalPosition: this.verticalPosition },
+        this.cellValue === 0 || this.cellValue === undefined ? 1 : 0
+      );
+    }
   }
 
 

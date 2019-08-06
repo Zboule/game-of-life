@@ -21,9 +21,9 @@ describe('UniverseGeneratorService', () => {
     const universe = service.getEmptyUniverse(width, height);
 
     expect(universe.age).toEqual(0);
-    expect(universe.map.length).toEqual(height);
+    expect(universe.cells.length).toEqual(height);
 
-    universe.map.forEach((universeRow) => {
+    universe.cells.forEach((universeRow) => {
       expect(universeRow.length).toEqual(width);
       universeRow.forEach((cell) => {
         expect(cell).toBe(0);

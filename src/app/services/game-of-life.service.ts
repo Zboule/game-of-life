@@ -4,6 +4,7 @@ import { Universe } from '../models/Universe';
 import { UniverseGeneratorService } from './universe-generator.service';
 import { UniverseEditorService } from './universe-editor.service';
 import { UniverseCoordinates } from '../models/UniverseCoordinates';
+import { ExportedCells } from '../models/ExportedCells';
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +50,50 @@ export class GameOfLifeService {
     this.universeState.next('stoped');
   }
 
-  public reset() {
+  public reset(cells: ExportedCells) {
     this.stop();
-    this.universe.next(this.universeGenerator.getEmptyUniverse(this.universe.value.width, this.universe.value.height));
+    // Créer un universe avec des valeurs par default
+    let newUniverse = this.universeGenerator.getEmptyUniverse(this.universe.value.width, this.universe.value.height);
+    newUniverse = this.universeEditor.setCellsValueAtCenter(newUniverse, cells);
+    this.universe.next(newUniverse);
+  }
+
+  public exportToConsole() {
+
+    let minVerticalPosition: number;
+    let maxVerticalPosition = 0;
+    let minHorizontalPosition: number;
+    let maxHorizontalPosition = 0;
+
+    this.universe.value.cells.forEach((cellRow, verticalPosition) => {
+      cellRow.forEach((cell, horizontalPosition) => {
+        if (cell.age > 0) {
+          if (minHorizontalPosition === undefined || minHorizontalPosition > horizontalPosition) {
+            minHorizontalPosition = horizontalPosition;
+          }
+          if (minVerticalPosition === undefined || minVerticalPosition > verticalPosition) {
+            minVerticalPosition = verticalPosition;
+          }
+          if (maxHorizontalPosition < horizontalPosition) {
+            maxHorizontalPosition = horizontalPosition;
+          }
+          if (maxVerticalPosition < verticalPosition) {
+            maxVerticalPosition = verticalPosition;
+          }
+        }
+      });
+    });
+
+    const asTruncatedMatrice = [];
+    for (let verticalPosition = minVerticalPosition; verticalPosition <= maxVerticalPosition; verticalPosition++) {
+      const cellRow = [];
+      for (let horizontalPosition = minHorizontalPosition; horizontalPosition <= maxHorizontalPosition; horizontalPosition++) {
+        cellRow.push(this.universe.value.cells[verticalPosition][horizontalPosition].age);
+      }
+      asTruncatedMatrice.push(cellRow);
+    }
+    console.log(JSON.stringify(asTruncatedMatrice));
+
   }
 
 

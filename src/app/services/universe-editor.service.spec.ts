@@ -17,12 +17,12 @@ describe('UniverseEditorService', () => {
     const univeseGenerator: UniverseGeneratorService = TestBed.get(UniverseGeneratorService);
     const universe = univeseGenerator.getEmptyUniverse(10, 10);
 
-    const editedUniverse = univeseEditor.setCellValue(universe, { heightPosition: 3, widthPosition: 6 }, 1);
+    const editedUniverse = univeseEditor.setCellValue(universe, { verticalPosition: 3, horizontalPosition: 6 }, 1);
 
     expect(editedUniverse === universe).toBeFalsy();
     expect(universe).not.toEqual(editedUniverse);
 
-    expect(editedUniverse.map[3][6]).toBeTruthy();
+    expect(editedUniverse.cells[3][6]).toBeTruthy();
   });
 
   it('should copy the universe', () => {
@@ -36,8 +36,8 @@ describe('UniverseEditorService', () => {
     expect(universe === universeCopy).toBeFalsy();
 
 
-    for (let i = 0; i < universe.map.length; i++) {
-      expect(universe.map[i] === universeCopy.map[i]).toBeFalsy();
+    for (let i = 0; i < universe.cells.length; i++) {
+      expect(universe.cells[i] === universeCopy.cells[i]).toBeFalsy();
     }
 
   });
@@ -49,11 +49,11 @@ describe('UniverseEditorService', () => {
 
     const univeseEditor: UniverseEditorService = TestBed.get(UniverseEditorService);
 
-    universe = univeseEditor.setCellValue(universe, { heightPosition: 501, widthPosition: 501 }, 1);
-    universe = univeseEditor.setCellValue(universe, { heightPosition: 501, widthPosition: 500 }, 1);
-    universe = univeseEditor.setCellValue(universe, { heightPosition: 500, widthPosition: 500 }, 1);
-    universe = univeseEditor.setCellValue(universe, { heightPosition: 500, widthPosition: 499 }, 1);
-    universe = univeseEditor.setCellValue(universe, { heightPosition: 499, widthPosition: 500 }, 1);
+    universe = univeseEditor.setCellValue(universe, { verticalPosition: 501, horizontalPosition: 501 }, 1);
+    universe = univeseEditor.setCellValue(universe, { verticalPosition: 501, horizontalPosition: 500 }, 1);
+    universe = univeseEditor.setCellValue(universe, { verticalPosition: 500, horizontalPosition: 500 }, 1);
+    universe = univeseEditor.setCellValue(universe, { verticalPosition: 500, horizontalPosition: 499 }, 1);
+    universe = univeseEditor.setCellValue(universe, { verticalPosition: 499, horizontalPosition: 500 }, 1);
 
     for (let i = 0; i < 100; i++) {
       let tickTime = Date.now();

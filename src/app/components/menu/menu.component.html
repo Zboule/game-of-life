@@ -1,9 +1,41 @@
+<h1>Jeux de la vie</h1>
+
 
 <div class="button-container">
     <button *ngIf="universeState === 'stoped'" mat-stroked-button color="primary" (click)="start()">START</button>
     <button *ngIf="universeState === 'started'" mat-stroked-button color="primary" (click)="stop()">STOP</button>
+
+    <mat-form-field>
+        <mat-label>Reset avec:</mat-label>
+        <mat-select [(value)]="selectedDefault">
+            <mat-option *ngFor="let cells of defaultCells" [value]="cells">
+                {{cells.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
+    <button mat-stroked-button color="primary" (click)="export()">EXPORT</button>
+
 </div>
 
 
 <span [matBadge]="universe.age" matBadgeOverlap="false">AGE</span>
+
+
+<div class="rules-container">
+
+    <h3>Régles</h3>
+    <div>
+        <app-cell [cellValue]="10"></app-cell>
+        <p>Une cellue apparait dans les cases vides entourés d'exactement de 3 cellules</p>
+    </div>
+    <div>
+        <app-cell [cellValue]="10"></app-cell>
+        <p>Une cellule meurt de d'isolement si elle a moins de 2 voisines</p>
+    </div>
+    <div>
+        <app-cell [cellValue]="10"></app-cell>
+        <p>Une cellule meurt d'étouffement si elle a plus de 3 voisines</p>
+    </div>
+</div>

@@ -21,9 +21,9 @@ describe('GameOfLifeService', () => {
 
   it('should have living cell', (done) => {
     const service: GameOfLifeService = TestBed.get(GameOfLifeService);
-    service.setCellValue({ heightPosition: 3, widthPosition: 6 }, 1);
+    service.setCellValue({ verticalPosition: 3, horizontalPosition: 6 }, 1);
     service.getUniverse().subscribe((universe) => {
-      expect(universe.map[3][6]).toBeTruthy();
+      expect(universe.cells[3][6]).toBeTruthy();
       done();
     });
   });

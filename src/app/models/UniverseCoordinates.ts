@@ -1,4 +1,4 @@
 export interface UniverseCoordinates {
-    widthPosition: number;
-    heightPosition: number;
+    horizontalPosition: number;
+    verticalPosition: number;
 }

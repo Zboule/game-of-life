@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Universe } from '../models/Universe';
+import { Cell } from '../models/Cell';
 
 @Injectable({
   providedIn: 'root'
@@ -9,35 +10,80 @@ export class UniverseGeneratorService {
   constructor() { }
 
   public getEmptyUniverse(width: number, height: number): Universe {
-    const map = Array(height).fill(Array(width).fill(0));
+    // const cells = Array<Array<Cell>>(height).fill(Array<Cell>(width).fill(0));
+
+
+    const cells = [];
+    for (let verticalPosition = 0; verticalPosition < height; verticalPosition++) {
+      const cellsRow: Cell[] = [];
+      for (let horizontalPosition = 0; horizontalPosition < width; horizontalPosition++) {
+
+        cellsRow.push({
+          age: 0,
+          nearby: [
+            {
+              horizontalPosition: horizontalPosition === 0 ? width - 1 : horizontalPosition - 1,
+              verticalPosition: verticalPosition === 0 ? height - 1 : verticalPosition - 1
+            },
+            {
+              horizontalPosition,
+              verticalPosition: verticalPosition === 0 ? height - 1 : verticalPosition - 1
+            },
+            {
+              horizontalPosition: horizontalPosition === width - 1 ? 0 : horizontalPosition + 1,
+              verticalPosition: verticalPosition === 0 ? height - 1 : verticalPosition - 1
+            },
+
+            {
+              horizontalPosition: horizontalPosition === 0 ? width - 1 : horizontalPosition - 1,
+              verticalPosition
+            },
+            {
+              horizontalPosition: horizontalPosition === width - 1 ? 0 : horizontalPosition + 1,
+              verticalPosition
+            },
+
+            {
+              horizontalPosition: horizontalPosition === 0 ? width - 1 : horizontalPosition - 1,
+              verticalPosition: verticalPosition === height - 1 ? 0 : verticalPosition + 1,
+            },
+            {
+              horizontalPosition,
+              verticalPosition: verticalPosition === height - 1 ? 0 : verticalPosition + 1,
+            },
+            {
+              horizontalPosition: horizontalPosition === width - 1 ? 0 : horizontalPosition + 1,
+              verticalPosition: verticalPosition === height - 1 ? 0 : verticalPosition + 1,
+            },
+          ]
+        });
+      }
+      cells.push(cellsRow);
+    }
+
     return {
       width,
       height,
       age: 0,
-      map
+      cells
     };
   }
 
-  public getFromUniverse(universe: Universe, width: number, height: number): Universe {
-    const oldMap = universe.map;
-    const map: number[][] = Array(height).fill(Array<number>(width).fill(0));
+  public getFromUniverse(oldUniverse: Universe, width: number, height: number): Universe {
 
-    map.forEach((row, heightIndex) => {
-      if (heightIndex < oldMap.length) {
-        row.forEach((cell, widthIndex) => {
-          if (widthIndex < oldMap[heightIndex].length) {
-            map[heightIndex][widthIndex] = oldMap[heightIndex][widthIndex];
+    const newUniverse = this.getEmptyUniverse(width, height);
+
+    newUniverse.cells.forEach((row, verticalPosition) => {
+      if (verticalPosition < oldUniverse.height) {
+        row.forEach((cell, horizontalPosition) => {
+          if (horizontalPosition < oldUniverse.width) {
+            cell.age = oldUniverse.cells[verticalPosition][horizontalPosition].age;
           }
         });
       }
     });
 
-    return {
-      ...universe,
-      width,
-      height,
-      map
-    };
+    return newUniverse;
   }
 
 }
