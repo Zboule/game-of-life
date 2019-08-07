@@ -2,202 +2,201 @@
 @import "src/styles/theme.scss";
 @import "src/styles/styles.scss";
 
-
-
 :host {
-    height :$menuHeight;
-    position:relative;
-    z-index: 10;
+  height: $menuHeight;
+  position: relative;
+  z-index: 10;
+
+  @include lg {
+    width: $menuWidth;
+    height: 100%;
+    flex-direction: row;
+  }
+
+  .menu {
+    will-change: top;
+    position: absolute;
+    transition: top 1s;
+    top: 100%;
+    background-color: white;
+    box-shadow: 0px 7px 20px 0px #88888852;
+    width: 100%;
+    min-height: 100%;
 
     @include lg {
-        width: $menuWidth;
-        height: 100%;
-        flex-direction:row;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
 
-    .menu {
-        will-change: top;
-        position: absolute;
-        transition: top 1s; 
-        top: 100%;
-        background-color: white;
-        box-shadow: 0px 7px 20px 0px #88888852;
-        width:100%;
-        min-height: 100%;
+    .container {
+      display: flex;
+      min-height: $menuHeight;
+      padding-left: 25px;
+      padding-right: 25px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
 
+      @include nonlg {
+        .navigation-button {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
 
-        @include lg {
+          .direction {
+            margin-right: 25px;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-        }
-
-
-    
-        .container {
-            display: flex; 
-            min-height:$menuHeight;
-            padding-left: 25px;
-            padding-right: 25px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            width:100%;
-            box-sizing: border-box;
-
-
-            @include nonlg {
-                .navigation-button {
-                    height: 100%;
-                    width: 100%;
-                    position: absolute;
-                    top: 0;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: center;
-                   
-                    .direction {
-    
-                        margin-right: 25px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        transition: transform 1s;
-                        will-change: transform;
-    
-                        div {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: center;
-                            align-items: center;
-                        }
-    
-    
-                        &.up{
-                            transform: rotate(0deg);
-                        }
-    
-                        &.down{
-                            transform: rotate(180deg);
-                        }
-                    }
-                }
-            }
-
-            @include lg{
-                .navigation-button{
-                    display: none;
-                }
-            }
-
-            
-
-
-
-   
-        }
-       
-
-        .container-0 {
-            position: relative;
-            z-index: 1;
-            display: flex;
             justify-content: center;
             align-items: center;
-      
+            transition: transform 1s;
+            will-change: transform;
 
-            .elements {
-                @include nonlg {
-                    width: 50%;
-                }
-
-                @include lg {
-                    width: 100%;
-                }
-               
-                height: 80%;
-
-                button {
-
-                    @include nonlg {
-                        width: 100px;
-                    }
-
-                    @include lg {
-                        width: 100%;
-                        height: 90px;
-                        font-size:40px;
-                    }
-                }
-            }
-        }
-    
-        .container-1 {
-            display:flex;
-            flex-direction: column;
-
-            .reset-buttons {
-                display:flex;
-                flex-direction: row;
-
-                @include lg {
-                    flex-direction: column;
-                }
-        
-
-                .reset-form-field {
-                    @include nonlg {
-                        flex: 1 1 auto;
-                        padding-right:30px;
-                    }                   
-                    mat-form-field {
-                        width:100%;
-                    }
-                }
-    
-                button {
-
-                    @include nonlg {
-                        width: 100px;
-                    }
-
-                    @include lg {
-                        width: 100%;
-                        height: 90px;
-                        font-size:40px;
-                    }
-                }
+            div {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
             }
 
-            
-        }
-
-        .container-2 {
-
-            .rules-container{
-                margin-top:40px;
-                margin-bottom:20px;
-                h1 {
-                    padding-bottom:10px;
-                }
-                div {
-                    display:flex;
-                    flex-direction: row;
-
-                    app-cell{
-                        margin-top:6px;
-                    }
-
-                    p  {
-                        padding-top: 0px;
-                        padding-bottom: 20px;
-                        padding-left:10px;
-                    }
-               
-                }
+            &.up {
+              transform: rotate(0deg);
             }
+
+            &.down {
+              transform: rotate(180deg);
+            }
+          }
         }
-     
+      }
+
+      @include lg {
+        .navigation-button {
+          display: none;
+        }
+      }
     }
+
+    .container-0 {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include lg {
+        order: 1;
+      }
+
+      .elements {
+        @include nonlg {
+          width: 50%;
+        }
+
+        @include lg {
+          width: 100%;
+        }
+
+        height: 80%;
+
+        button {
+          @include nonlg {
+            width: 100px;
+          }
+
+          @include lg {
+            width: 100%;
+            height: 90px;
+            font-size: 40px;
+          }
+        }
+      }
+    }
+
+    .container-1 {
+      display: flex;
+      flex-direction: column;
+
+      @include lg {
+        order: 0;
+      }
+
+      .reset-buttons {
+        display: flex;
+        flex-direction: row;
+
+        @include lg {
+          flex-direction: column;
+        }
+
+        .reset-form-field {
+          @include nonlg {
+            flex: 1 1 auto;
+            padding-right: 30px;
+          }
+          mat-form-field {
+            width: 100%;
+          }
+        }
+
+        button {
+          @include nonlg {
+            width: 100px;
+          }
+
+          @include lg {
+            width: 100%;
+            height: 90px;
+            font-size: 40px;
+          }
+        }
+      }
+    }
+
+    .container-2 {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      @include lg {
+        order: 2;
+      }
+
+      .rules-container {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        h1 {
+          padding-bottom: 10px;
+        }
+        div {
+          display: flex;
+          flex-direction: row;
+
+          app-cell {
+            margin-top: 6px;
+          }
+
+          p {
+            padding-top: 0px;
+            padding-bottom: 20px;
+            padding-left: 10px;
+          }
+        }
+      }
+
+      .github-ref {
+        padding-top: 90px;
+        a {
+          color: $primary;
+        }
+      }
+    }
+  }
 }

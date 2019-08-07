@@ -52,7 +52,6 @@ export class GameOfLifeService {
 
   public reset(cells: ExportedCells) {
     this.stop();
-    // Créer un universe avec des valeurs par default
     let newUniverse = this.universeGenerator.getEmptyUniverse(this.universe.value.width, this.universe.value.height);
     newUniverse = this.universeEditor.setCellsValueAtCenter(newUniverse, cells);
     this.universe.next(newUniverse);

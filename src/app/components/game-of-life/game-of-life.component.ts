@@ -46,7 +46,6 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public setUniverseSize() {
-    console.log(this.universeContainer.nativeElement.offsetHeight)
     const nbInHeight = Math.floor(this.universeContainer.nativeElement.offsetHeight / 20);
     const nbInWidth = Math.floor(this.universeContainer.nativeElement.offsetWidth / 20);
     this.gameOfLife.setUniversSize(nbInWidth, nbInHeight);

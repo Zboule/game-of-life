@@ -22,22 +22,22 @@
     </div>
 
     <div class="container container-1" #container>
-            <div class="reset-buttons">
-                <div class="reset-form-field">
-                    <mat-form-field>
-                        <mat-label>Reset avec:</mat-label>
-                        <mat-select [(value)]="selectedDefault">
-                            <mat-option *ngFor="let cells of defaultCells" [value]="cells">
-                                {{cells.viewValue}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-    
-                <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
+        <div class="reset-buttons">
+            <div class="reset-form-field">
+                <mat-form-field>
+                    <mat-label>Reset avec:</mat-label>
+                    <mat-select [(value)]="selectedDefault">
+                        <mat-option *ngFor="let cells of defaultCells" [value]="cells">
+                            {{cells.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
-    
+
+            <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
         </div>
+
+    </div>
 
 
     <div class="container container-2" #container>
@@ -64,13 +64,7 @@
             <button mat-stroked-button color="primary" (click)="export()">IMPORT</button>
         </div> -->
 
+        <div class="github-ref"><a href="https://github.com/Zboule/game-of-life">Lien vers le code source</a></div>
     </div>
+
 </div>
-
-
-
-
-
-
-
-<!-- <span [matBadge]="universe.age" matBadgeOverlap="false">AGE</span> -->
