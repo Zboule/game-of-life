@@ -11,9 +11,9 @@
     left: 0;
 
 
-    // @include lg {
-    //     flex-direction:row;
-    // }
+    @include lg {
+        flex-direction:row;
+    }
 
 
 }

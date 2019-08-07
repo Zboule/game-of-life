@@ -1,8 +1,14 @@
 @import "src/styles/variables.scss";
+@import "src/styles/styles.scss";
 
 :host {
     width: 100%;
     height: $gameHeight;
+
+    @include lg {
+        width: $gameWidth;
+        height:100%;
+    }
 
     .universe-container {
         

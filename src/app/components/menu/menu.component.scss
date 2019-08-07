@@ -1,5 +1,6 @@
 @import "src/styles/variables.scss";
 @import "src/styles/theme.scss";
+@import "src/styles/styles.scss";
 
 
 
@@ -8,7 +9,12 @@
     position:relative;
     z-index: 10;
 
-    
+    @include lg {
+        width: $menuWidth;
+        height: 100%;
+        flex-direction:row;
+    }
+
     .menu {
         will-change: top;
         position: absolute;
@@ -17,7 +23,17 @@
         background-color: white;
         box-shadow: 0px 7px 20px 0px #88888852;
         width:100%;
+        min-height: 100%;
 
+
+        @include lg {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+
+    
         .container {
             display: flex; 
             min-height:$menuHeight;
@@ -29,48 +45,53 @@
             box-sizing: border-box;
 
 
-            .navigation-button {
-                height: 100%;
-                width: 100%;
-                position: absolute;
-                top: 0;
-                z-index: -1;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-               
-                .direction {
-
-                    margin-right: 25px;
+            @include nonlg {
+                .navigation-button {
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    z-index: -1;
                     display: flex;
-                    flex-direction: column;
-                    justify-content: center;
+                    justify-content: flex-end;
                     align-items: center;
-                    transition: transform 1s;
-                    will-change: transform;
-
-                    div {
+                   
+                    .direction {
+    
+                        margin-right: 25px;
                         display: flex;
-                        flex-direction: row;
+                        flex-direction: column;
                         justify-content: center;
                         align-items: center;
-
-                        // div {
-                        //     display: flex;
-                        //     flex-direction: row;
-                        // }
-                    }
-
-
-                    &.up{
-                        transform: rotate(0deg);
-                    }
-
-                    &.down{
-                        transform: rotate(180deg);
+                        transition: transform 1s;
+                        will-change: transform;
+    
+                        div {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                        }
+    
+    
+                        &.up{
+                            transform: rotate(0deg);
+                        }
+    
+                        &.down{
+                            transform: rotate(180deg);
+                        }
                     }
                 }
             }
+
+            @include lg{
+                .navigation-button{
+                    display: none;
+                }
+            }
+
+            
 
 
 
@@ -87,12 +108,27 @@
       
 
             .elements {
-                width: 50%;
+                @include nonlg {
+                    width: 50%;
+                }
+
+                @include lg {
+                    width: 100%;
+                }
+               
                 height: 80%;
 
                 button {
-                    width: 100%;
-                    height: 100%;
+
+                    @include nonlg {
+                        width: 100px;
+                    }
+
+                    @include lg {
+                        width: 100%;
+                        height: 90px;
+                        font-size:40px;
+                    }
                 }
             }
         }
@@ -105,18 +141,39 @@
                 display:flex;
                 flex-direction: row;
 
+                @include lg {
+                    flex-direction: column;
+                }
+        
+
                 .reset-form-field {
-                    flex: 1 1 auto;
-                    padding-right:30px;
+                    @include nonlg {
+                        flex: 1 1 auto;
+                        padding-right:30px;
+                    }                   
                     mat-form-field {
                         width:100%;
                     }
                 }
     
                 button {
-                    width: 100px;
+
+                    @include nonlg {
+                        width: 100px;
+                    }
+
+                    @include lg {
+                        width: 100%;
+                        height: 90px;
+                        font-size:40px;
+                    }
                 }
             }
+
+            
+        }
+
+        .container-2 {
 
             .rules-container{
                 margin-top:40px;
@@ -140,7 +197,6 @@
                
                 }
             }
-            
         }
      
     }

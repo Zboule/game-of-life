@@ -9,7 +9,7 @@
         </div>
 
 
-        <div class="navigation-button" (click)="visibleMenuLevel>0  ? visibleMenuLevel=0 : visibleMenuLevel=1">
+        <div class="navigation-button" (click)="visibleMenuLevel>0  ? visibleMenuLevel=0 : visibleMenuLevel=2">
             <div [class]="'direction ' + (visibleMenuLevel>0  ?'down' : 'up')">
                 <div>
                     <app-cell [cellValue]="10"></app-cell>
@@ -21,22 +21,26 @@
         </div>
     </div>
 
-
     <div class="container container-1" #container>
-        <div class="reset-buttons">
-            <div class="reset-form-field">
-                <mat-form-field>
-                    <mat-label>Reset avec:</mat-label>
-                    <mat-select [(value)]="selectedDefault">
-                        <mat-option *ngFor="let cells of defaultCells" [value]="cells">
-                            {{cells.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="reset-buttons">
+                <div class="reset-form-field">
+                    <mat-form-field>
+                        <mat-label>Reset avec:</mat-label>
+                        <mat-select [(value)]="selectedDefault">
+                            <mat-option *ngFor="let cells of defaultCells" [value]="cells">
+                                {{cells.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
             </div>
-
-            <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
+    
         </div>
+
+
+    <div class="container container-2" #container>
 
         <div class="rules-container">
             <h1>Jeux de la vie</h1>

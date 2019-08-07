@@ -1,2 +1,6 @@
+
+$menuWidth: 400px;
+$gameWidth: calc(100% - #{$menuWidth});
+
 $gameHeight:90vh;
 $menuHeight:calc(100vh - #{$gameHeight});

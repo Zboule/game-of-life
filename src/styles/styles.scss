@@ -55,6 +55,13 @@ $screen-xl-min: 1200px;
         @content;
     }
  }
+
+// Large devices
+@mixin nonlg {
+    @media (max-width: #{$screen-lg-min}) {
+        @content;
+    }
+ }
  
  // Extra large devices
  @mixin xl {
