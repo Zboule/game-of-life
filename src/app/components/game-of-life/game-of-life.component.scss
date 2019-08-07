@@ -1,20 +1,29 @@
-.universe-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 2px;
+@import "src/styles/variables.scss";
 
-    .row-of-cells  {
+:host {
+    width: 100%;
+    height: $gameHeight;
+
+    .universe-container {
+        
         display: flex;
+        height: 100%;
+        width:100%;
+        flex-direction: column;
         justify-content: center;
-        width: 100%;       
-    }
+        box-sizing: border-box;
+        padding: 2px;
     
-  
-}
+        .row-of-cells  {
+            display: flex;
+            justify-content: center;
+            width: 100%;       
+        }
+        
+      
+    }
+} 
+
 
     
 

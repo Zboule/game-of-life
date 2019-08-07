@@ -1,41 +1,72 @@
-<h1>Jeux de la vie</h1>
+<div class="menu" #menu>
+
+    <div class="container container-0" #container>
+        <div class="elements">
+            <button class="start-stop" *ngIf="universeState === 'stoped'" mat-stroked-button color="primary"
+                (click)="start()">START</button>
+            <button class="start-stop" *ngIf="universeState === 'started'" mat-stroked-button color="primary"
+                (click)="stop()">STOP</button>
+        </div>
 
 
-<div class="button-container">
-    <button *ngIf="universeState === 'stoped'" mat-stroked-button color="primary" (click)="start()">START</button>
-    <button *ngIf="universeState === 'started'" mat-stroked-button color="primary" (click)="stop()">STOP</button>
+        <div class="navigation-button" (click)="visibleMenuLevel>0  ? visibleMenuLevel=0 : visibleMenuLevel=1">
+            <div [class]="'direction ' + (visibleMenuLevel>0  ?'down' : 'up')">
+                <div>
+                    <app-cell [cellValue]="10"></app-cell>
+                    <app-cell [cellValue]="10"></app-cell>
+                </div>
 
-    <mat-form-field>
-        <mat-label>Reset avec:</mat-label>
-        <mat-select [(value)]="selectedDefault">
-            <mat-option *ngFor="let cells of defaultCells" [value]="cells">
-                {{cells.viewValue}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+                <app-cell [cellValue]="10"></app-cell>
+            </div>
+        </div>
+    </div>
 
-    <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
-    <button mat-stroked-button color="primary" (click)="export()">EXPORT</button>
 
+    <div class="container container-1" #container>
+        <div class="reset-buttons">
+            <div class="reset-form-field">
+                <mat-form-field>
+                    <mat-label>Reset avec:</mat-label>
+                    <mat-select [(value)]="selectedDefault">
+                        <mat-option *ngFor="let cells of defaultCells" [value]="cells">
+                            {{cells.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <button mat-stroked-button color="primary" (click)="reset()">RESET</button>
+        </div>
+
+        <div class="rules-container">
+            <h1>Jeux de la vie</h1>
+
+            <div>
+                <app-cell [cellValue]="10"></app-cell>
+                <p>Une cellue apparait dans les cases vides entourés d'exactement de 3 cellules</p>
+            </div>
+            <div>
+                <app-cell [cellValue]="10"></app-cell>
+                <p>Une cellule meurt de d'isolement si elle a moins de 2 voisines</p>
+            </div>
+            <div>
+                <app-cell [cellValue]="10"></app-cell>
+                <p>Une cellule meurt d'étouffement si elle a plus de 3 voisines</p>
+            </div>
+        </div>
+
+        <!-- <div class="import-export-buttons">
+            <button mat-stroked-button color="primary" (click)="export()">EXPORT</button>
+            <button mat-stroked-button color="primary" (click)="export()">IMPORT</button>
+        </div> -->
+
+    </div>
 </div>
 
 
-<span [matBadge]="universe.age" matBadgeOverlap="false">AGE</span>
 
 
-<div class="rules-container">
 
-    <h3>Régles</h3>
-    <div>
-        <app-cell [cellValue]="10"></app-cell>
-        <p>Une cellue apparait dans les cases vides entourés d'exactement de 3 cellules</p>
-    </div>
-    <div>
-        <app-cell [cellValue]="10"></app-cell>
-        <p>Une cellule meurt de d'isolement si elle a moins de 2 voisines</p>
-    </div>
-    <div>
-        <app-cell [cellValue]="10"></app-cell>
-        <p>Une cellule meurt d'étouffement si elle a plus de 3 voisines</p>
-    </div>
-</div>
+
+
+<!-- <span [matBadge]="universe.age" matBadgeOverlap="false">AGE</span> -->
