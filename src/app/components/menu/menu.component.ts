@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // TODO: Put that away and rename it
   public defaultCells: { viewValue: string, cells: ExportedCells }[] = [
-    { viewValue: 'Vide', cells: [] },
+    { viewValue: 'Grille vide', cells: [] },
     { viewValue: 'The R-pentomino', cells: [[0, 1, 1], [1, 1, 0], [0, 1, 0]] },
     { viewValue: 'Diehard', cells: [[0, 0, 0, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 1, 1, 1]] },
     { viewValue: 'Acorn', cells: [[0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0], [1, 1, 0, 0, 1, 1, 1]] },

@@ -108,7 +108,7 @@
 
         button {
           @include nonlg {
-            width: 100px;
+            width: 100%;
           }
 
           @include lg {
@@ -192,7 +192,13 @@
       }
 
       .github-ref {
-        padding-top: 90px;
+        @include nonlg {
+          order: 40;
+        }
+        @include lg {
+          padding-top: 90px;
+        }
+
         a {
           color: $primary;
         }
