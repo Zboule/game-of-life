@@ -31,27 +31,47 @@
 
     .container {
       display: flex;
-      min-height: $menuHeight;
+      min-height: 100%;
       padding-left: 25px;
       padding-right: 25px;
       padding-top: 10px;
       padding-bottom: 10px;
       width: 100%;
       box-sizing: border-box;
+    }
+
+    .container-0 {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @include lg {
+        order: 1;
+      }
+
+      .elements {
+        @include nonlg {
+          flex: 1 1 auto;
+        }
+
+        @include lg {
+          width: 100%;
+        }
+      }
+
 
       @include nonlg {
         .navigation-button {
+
           height: 100%;
-          width: 100%;
-          position: absolute;
-          top: 0;
-          z-index: -1;
           display: flex;
           justify-content: flex-end;
           align-items: center;
 
           .direction {
-            margin-right: 25px;
+            margin-left: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -80,42 +100,6 @@
       @include lg {
         .navigation-button {
           display: none;
-        }
-      }
-    }
-
-    .container-0 {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      @include lg {
-        order: 1;
-      }
-
-      .elements {
-        @include nonlg {
-          width: 50%;
-        }
-
-        @include lg {
-          width: 100%;
-        }
-
-        height: 80%;
-
-        button {
-          @include nonlg {
-            width: 100%;
-          }
-
-          @include lg {
-            width: 100%;
-            height: 90px;
-            font-size: 40px;
-          }
         }
       }
     }

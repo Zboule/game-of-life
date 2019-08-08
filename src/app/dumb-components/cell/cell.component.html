@@ -1,0 +1,4 @@
+<div class="cellContainer" (click)="onClickCell()" (mouseenter)="mouseEnter($event)">
+    <div #cell [class]="'cell ' + (cellValue !== undefined ? (cellValue>0 ? 'alive' : 'dead') : '') + ' age' + cellValue"
+        [style.opacity]="cellValue / 10 + 0.2"></div>
+</div>

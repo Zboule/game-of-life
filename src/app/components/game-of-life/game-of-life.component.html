@@ -2,7 +2,7 @@
     <div *ngFor="let row of observableCells;let verticalPosition = index" class="row-of-cells">
 
         <app-cell *ngFor="let cell of row;let horisontalPosition = index" [observableValue]="cell"
-            [horisontalPosition]="horisontalPosition" [verticalPosition]="verticalPosition">
+            [horisontalPosition]="horisontalPosition" [verticalPosition]="verticalPosition" (userSetCellValue)="userSetCellValue(verticalPosition,horisontalPosition,$event)">
         </app-cell>
 
     </div>

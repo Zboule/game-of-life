@@ -1,0 +1,19 @@
+@import "src/styles/theme.scss";
+
+::ng-deep {
+  .ng5-slider {
+    .ng5-slider-pointer {
+      &.ng5-slider-active:after {
+        background-color: white !important;
+      }
+      outline: unset;
+      background-color: $primary !important;
+    }
+    .ng5-slider-selection {
+      background-color: $primary !important;
+    }
+    .ng5-slider-tick.ng5-slider-selected {
+      background-color: $primary !important;
+    }
+  }
+}

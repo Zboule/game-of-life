@@ -6,22 +6,45 @@ import { UniverseEditorService } from './universe-editor.service';
 import { UniverseCoordinates } from '../models/UniverseCoordinates';
 import { ExportedCells } from '../models/ExportedCells';
 
+export const defaultCells: { viewValue: string, cells: ExportedCells }[] = [
+  { viewValue: 'Grille vide', cells: [] },
+  { viewValue: 'The R-pentomino', cells: [[0, 1, 1], [1, 1, 0], [0, 1, 0]] },
+  { viewValue: 'Diehard', cells: [[0, 0, 0, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 1, 1, 1]] },
+  { viewValue: 'Acorn', cells: [[0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0], [1, 1, 0, 0, 1, 1, 1]] },
+  { viewValue: 'Light-weight spaceship', cells: [[1, 0, 0, 1, 0], [0, 0, 0, 0, 1], [1, 0, 0, 0, 1], [0, 1, 1, 1, 1]] },
+  {
+    viewValue: 'Gun', cells: [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+  },
+];
+
+export type GenerationTime = 0 | 1000 | 500 | 100 | -1;
+export const GenerationTimeValues: GenerationTime[] = [0, 1000, 500, 100, -1];
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameOfLifeService {
 
-  private generationTime = 500;
+  public generationTime: BehaviorSubject<GenerationTime>;
   private intervalHandler: any;
   private universe: BehaviorSubject<Universe>;
-  public universeState: BehaviorSubject<'started' | 'stoped'>;
 
   constructor(
     private universeGenerator: UniverseGeneratorService,
     private universeEditor: UniverseEditorService
   ) {
-    this.universeState = new BehaviorSubject('stoped');
-    this.universe = new BehaviorSubject(this.universeGenerator.getEmptyUniverse(10, 10));
+    this.generationTime = new BehaviorSubject(0);
+    this.universe = new BehaviorSubject(this.universeGenerator.getEmptyUniverse(0, 0));
   }
 
   public getUniverse(): Observable<Universe> {
@@ -37,20 +60,31 @@ export class GameOfLifeService {
     this.universe.next(this.universeGenerator.getFromUniverse(this.universe.value, width, height));
   }
 
-  public start() {
-    clearInterval(this.intervalHandler);
-    this.universeState.next('started');
-    this.intervalHandler = setInterval(() => {
-      this.universe.next(this.universeEditor.tickUniverse(this.universe.value));
-    }, this.generationTime);
+
+  public setGenerationTime(generationTime: GenerationTime) {
+    if (this.generationTime.value !== generationTime) {
+      this.stop();
+      this.generationTime.next(generationTime);
+      if (generationTime !== 0) {
+        this.start();
+      }
+
+    }
   }
 
-  public stop() {
+  private start() {
     clearInterval(this.intervalHandler);
-    this.universeState.next('stoped');
+    this.intervalHandler = setInterval(() => {
+      this.universe.next(this.universeEditor.tickUniverse(this.universe.value));
+    }, this.generationTime.value);
+  }
+
+  private stop() {
+    clearInterval(this.intervalHandler);
   }
 
   public reset(cells: ExportedCells) {
+    this.generationTime.next(0);
     this.stop();
     let newUniverse = this.universeGenerator.getEmptyUniverse(this.universe.value.width, this.universe.value.height);
     newUniverse = this.universeEditor.setCellsValueAtCenter(newUniverse, cells);

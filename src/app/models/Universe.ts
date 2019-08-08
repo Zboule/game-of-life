@@ -8,7 +8,3 @@ export interface Universe {
 }
 
 
-
-export const defaultCells: { [key: string]: number[][] } = {
-    abc: [[1, 1], [1, 0], [1, 0]]
-};

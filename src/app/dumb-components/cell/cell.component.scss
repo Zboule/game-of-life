@@ -26,21 +26,21 @@
     .cell {
         border-radius: 6px;
         background-color: $primary;
-
-
-    }
-
-    .dead {
         animation-fill-mode: forwards;
         animation-duration: 0.5s;
+    }
+
+    .dead {   
         animation-name: dieCell;
+        animation-fill-mode: forwards;
+        animation-duration: 0.5s;
     }
 
     .alive
     {
+        animation-name: growCell;
         animation-fill-mode: forwards;
         animation-duration: 0.5s;
-        animation-name: growCell;
     }
 
 }

@@ -2,15 +2,13 @@
 
     <div class="container container-0" #container>
         <div class="elements">
-            <button class="start-stop" *ngIf="universeState === 'stoped'" mat-stroked-button color="primary"
-                (click)="start()">START</button>
-            <button class="start-stop" *ngIf="universeState === 'started'" mat-stroked-button color="primary"
-                (click)="stop()">STOP</button>
+            <app-speed-selector [selectedSpeed]="generationTime" [availableSpeed]="availableSpeed"  (speedChangeEvent)="onSpeedChange($event)">
+            </app-speed-selector>
         </div>
 
 
-        <div class="navigation-button" (click)="visibleMenuLevel>0  ? visibleMenuLevel=0 : visibleMenuLevel=2">
-            <div [class]="'direction ' + (visibleMenuLevel>0  ?'down' : 'up')">
+        <div class="navigation-button" (click)="menuService.menuLevel.value>0  ? menuService.menuLevel.next(0) : menuService.menuLevel.next(2)">
+            <div [class]="'direction ' + (menuService.menuLevel.value>0  ?'down' : 'up')">
                 <div>
                     <app-cell [cellValue]="10"></app-cell>
                     <app-cell [cellValue]="10"></app-cell>
@@ -64,7 +62,20 @@
             <button mat-stroked-button color="primary" (click)="export()">IMPORT</button>
         </div> -->
 
-        <div class="github-ref"><a href="https://github.com/Zboule/game-of-life">Lien vers le code source</a></div>
+
+
+
+
+
+        <div class="github-ref">
+
+            <span>View code on </span>
+
+            <a target="_blank" href="https://github.com/Zboule/game-of-life">
+                <img src="assets/github.svg">
+                <span>GitHub</span>
+            </a>
+        </div>
     </div>
 
 </div>

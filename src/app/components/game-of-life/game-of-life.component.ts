@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { GameOfLifeService } from '../../services/game-of-life.service';
+import { GameOfLifeService, defaultCells } from '../../services/game-of-life.service';
 import { Universe } from '../../models/Universe';
 import { Subscription, fromEvent, BehaviorSubject } from 'rxjs';
+import { Cell } from 'src/app/models/Cell';
 
 @Component({
   selector: 'app-game-of-life',
@@ -14,8 +15,6 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public universe: Universe;
   private subscriptions: Subscription[] = [];
-
-  private cellColor: [10, 20, 30];
 
   public observableCells: BehaviorSubject<number>[][] = [];
 
@@ -37,6 +36,8 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.setUniverseSize();
+      this.gameOfLife.reset(defaultCells[1].cells);
+      this.gameOfLife.setGenerationTime(1000);
     });
   }
 
@@ -51,6 +52,13 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.gameOfLife.setUniversSize(nbInWidth, nbInHeight);
   }
 
+  public userSetCellValue(verticalPosition: number, horizontalPosition: number, value: number) {
+    this.gameOfLife.setGenerationTime(0);
+    this.gameOfLife.setCellValue(
+      { horizontalPosition, verticalPosition },
+      value
+    );
+  }
 
   private onNewUniverse = (universe: Universe): void => {
     if (this.universe === undefined || this.universe.height !== universe.height || this.universe.width !== universe.width) {
@@ -73,5 +81,7 @@ export class GameOfLifeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.universe = universe;
 
   }
+
+
 
 }
