@@ -4,4 +4,11 @@
 
 
 
+# Dev
 
+```
+npm i
+```
+```
+npm run start
+    ```
